@@ -10,7 +10,9 @@ function index()
     if nixio.fs.access('/usr/bin/ssr-redir') then
         entry({'admin', 'services', 'vssr'}, alias('admin', 'services', 'vssr', 'client'), _('Hello World'), 0).dependent = true -- 首页
         entry({'admin', 'services', 'vssr', 'client'}, cbi('vssr/client'), _('SSR Client'), 10).leaf = true -- 基本设置
+        if nixio.fs.access("/usr/bin/ssr-server") then
         entry({'admin', 'services', 'vssr', 'servers'}, cbi('vssr/servers'), _('Severs Nodes'), 11).leaf = true -- 服务器节点
+        end
         entry({'admin', 'services', 'vssr', 'servers'}, arcombine(cbi('vssr/servers'), cbi('vssr/client-config')), _('Severs Nodes'), 11).leaf = true -- 编辑节点
         entry({'admin', 'services', 'vssr', 'control'}, cbi('vssr/control'), _('Access Control'), 12).leaf = true -- 访问控制
         if nixio.fs.access('/usr/bin/v2ray/v2ray') then
